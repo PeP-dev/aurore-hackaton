@@ -1,0 +1,26 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/global.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/faq.css') }}">
+</head>
+<body>
+{% include 'header.html' %}
+<main>
+    <div class="presentation">
+        <details class="qa">
+            <summary class="question">
+                Question très pertinente
+            </summary>
+            Réponse encore plus pertinente
+        </details>
+        <details class="qa">
+            <summary class="question">
+                Question bête
+            </summary>
+            Réponse bête
+        </details>
+    </div>
+</main>
+</body>
+</html>

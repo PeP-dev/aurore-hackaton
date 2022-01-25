@@ -1,0 +1,10 @@
+details.qa {
+    padding:10px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 5px;
+    color: var(--secondary-color);
+    display:block;
+}
+details.qa > summary.question {
+    font-weight: bolder;
+}
