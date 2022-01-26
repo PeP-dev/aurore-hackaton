@@ -3,31 +3,35 @@ from AuroreApp.dataclasses.aurore_dataclasses import Hebergeur
 from AuroreApp.models.sql_aurore import AuroreSQL
 
 class User:
-    def __init__(self, id, identity, email, pwd, is_admin):
+    def __init__(self, id, identity, email, pwd, tel=None,nom="",prenom="", is_admin=False):
         self.id = id
         self.email = email
         self.pwd = pwd
         self.identity = identity
         self.is_admin = is_admin
+        self.tel = tel
+        self.nom = nom
+        self.prenom = prenom
 
 
 class AbstractUserService:
     def get_user_by_id(self, id):
         raise Exception("Not implemented")
 
-    def add_user(self, user: User):
+    def add_user(self, user):
         raise Exception("Not implemented")
 
     def get_user_by_email(self, email):
         raise Exception("Not implemented")
     
-    def del_user(self, user:User):
+    def del_user(self, user):
         raise Exception("Not implemented")
 
 
 class MockUserService(AbstractUserService):
     def __init__(self):
-        self.users = {}
+        self.users = {
+        }
 
     def get_user_by_id(self, id):
         if id in self.users:
@@ -38,10 +42,10 @@ class MockUserService(AbstractUserService):
             if user.email == email:
                 return user
 
-    def add_user(self, user: User):
+    def add_user(self, user):
         self.users[user.id] = user
     
-    def del_user(self,user:User):
+    def del_user(self,user):
         self.users.__delitem__(user.id)
     
 

@@ -11,10 +11,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from AuroreApp import app
 from AuroreApp.mailing_service import MailgunMailingService, Mail
-from AuroreApp.user_service import MockUserService, SQLUserService
-from AuroreApp.dataclasses.aurore_dataclasses import Hebergeur
+from AuroreApp.offres_service import MockOffreService
+from AuroreApp.user_service import MockUserService, User
 
-user_service = SQLUserService()
+user_service = MockUserService()
+offres_service = MockOffreService()
 mailing_service = MailgunMailingService(os.getenv('MAILGUN_API_KEY'), os.getenv('MAILGUN_DOMAIN'))
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 
@@ -45,9 +46,23 @@ def require_auth(f):
     return decorated
 
 
+def require_admin(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if request.current_user is None:
+            return redirect(url_for('login', next=f.__name__))
+
+        if not request.current_user.is_admin:
+            return redirect(url_for(login), next=f.__name__)
+        return f(*args, **kwargs)
+
+    return decorated
+
+
 @app.route("/", methods=["GET"])
 def home_page():
     return render_template("index.html")
+
 
 @app.route("/pro", methods=["GET"])
 def pro_form():
@@ -68,29 +83,21 @@ def pro():
     return render_template("thanks.html")
 
 
-@app.route("/particulier", methods=["GET","POST"])
+@app.route("/particulier", methods=["GET", "POST"])
 @require_auth
 def particulier():
-    #GET
-    if request.method == "GET" :
+    # GET
+    if request.method == "GET":
         return render_template("particulier.html")
-    #POST
-    elif request.method == "POST" :
+    # POST
+    elif request.method == "POST":
         form = request.form
-        user:Hebergeur = request.current_user
-        
-        _id = user.id
-        _email = user.mail
-        _pwd = user.mdp
-        user_service.del_user(user)
-        
-        _nom = form['nom']
-        _prenom = form['prenom']
-        try :
+        user = request.current_user
+
+        try:
             _telephone = form.get('telephone')
         except KeyError as ke:
             _telephone = None
-        user_service.add_user_more(_id,_email,_pwd,_nom,_prenom,_telephone)
 
         return render_template("thanks.html")
 
@@ -108,7 +115,7 @@ def signup():
     data = request.form
 
     # gets name, email and password
-    email= data.get('email')
+    email = data.get('email')
     password = str(data.get('password'))
     if not data.get('particulier'):
         return make_response(
@@ -132,7 +139,7 @@ def signup():
     user = user_service.get_user_by_email(email)
 
     if not user:
-        new_user = Hebergeur(str(uuid.uuid4()), email, generate_password_hash(password),None,None,None,0)
+        new_user = User(str(uuid.uuid4()), "", email, generate_password_hash(password), is_admin=True)
         user_service.add_user(new_user)
         return make_response(render_template('login.html'), 201)
     else:
@@ -160,6 +167,14 @@ def logout():
     return response
 
 
+@app.route('/administration', methods=['GET'])
+@require_auth
+def admin():
+    offres = offres_service.get_all()
+    unchecked = offres_service.get_unchecked()
+    return make_response(render_template('offres.html', offres=offres, unchecked=unchecked), 200)
+
+
 # route for logging user in
 @app.route('/login', methods=['POST'])
 def login():
@@ -184,7 +199,7 @@ def login():
         # returns 401 if user does not exist
         return make_response(render_template('login.html', error="Email invalide"), 400)
 
-    if check_password_hash(user.mdp, str(auth.get('password'))):
+    if check_password_hash(user.pwd, str(auth.get('password'))):
         # generates the JWT Token
         token = jwt.encode({
             'public_id': user.id,

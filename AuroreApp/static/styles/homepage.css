@@ -8,6 +8,7 @@
 body {
     margin:0;
 }
+
 .grid {
     display: inline-grid;
     grid-template-rows: 200px 200px;

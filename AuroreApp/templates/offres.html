@@ -1,26 +1,82 @@
 <html>
-    <head>
-    </head>
-    <body>
-        <header>
-            Offres d'hébergements
-        </header>
-        
-        <ul id="bulletlist_offres">
-            {% for item in list_offres %}
-                <li>
-                    <p>
-                        Date de début : {{item.debut}}
-                        Date de fin : {{item.fin}}
-                        Adresse : {{item.adresse}}
-                        N°tel : {{item.tel}}
-                    </p>
-                    <a href="/">
-                        (infos)
-                    </a>
-                </li>
-            {%endfor%}
-        </ul>
-    </body>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/global.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/offres.css') }}">
+</head>
+<body>
+<div class="height-wrapper">
+    {% include 'header.html' %}
+    <main class="main-content">
+        {% if unchecked |length %}
+            <h2>
+                Offres non consultées
+            </h2>
+            <ul id="bulletlist_offres">
+                {% for item in unchecked %}
+                    <li>
+                        <div class="offer-grid">
+                            <div class="offer-grid-element">
+                                Adresse : {{ item.adresse }}
+                            </div>
+                            <div class="offer-grid-element">
+                                N°tel : {{ item.tel }}
+                            </div>
+                            <div class="offer-grid-element">
+                                Date de début : {{ item.debut }}
+                            </div>
+                            <div class="offer-grid-element">
+                                Date de fin : {{ item.fin }}
+                            </div>
+                            <div class="offer-grid-element">
+                                Nb couchage : {{ item.nbCouchages }}
+                            </div>
+                        </div>
+                        <div class="description-offre">
+                            Description : {{ item.description }}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h2>
+                Pas de nouvelles offres
+            </h2>
+        {% endif %}
 
+        {% if offres |length %}
+            <h2>
+                Offres précédentes
+            </h2>
+            <ul id="bulletlist_offres">
+            {% for item in offres %}
+                <li>
+                    <div class="offer-grid">
+                        <div class="offer-grid-element">
+                            Adresse : {{ item.adresse }}
+                        </div>
+                        <div class="offer-grid-element">
+                            N°tel : {{ item.tel }}
+                        </div>
+                        <div class="offer-grid-element">
+                            Date de début : {{ item.debut }}
+                        </div>
+                        <div class="offer-grid-element">
+                            Date de fin : {{ item.fin }}
+                        </div>
+                        <div class="offer-grid-element">
+                            Nb couchage : {{ item.nbCouchages }}
+                        </div>
+                    </div>
+                    <div class="offer-grid-element">
+                        Description : {{ item.description }}
+                    </div>
+                </li>
+            {% endfor %}
+        {% endif %}
+        </ul>
+    </main>
+</div>
+
+</body>
 </html>

@@ -15,9 +15,18 @@
         <a href="{{ url_for('login') }}">
             <i class="fa fa-2xl fa-user-plus" aria-hidden="true"></i>
         </a>
+
     {% else %}
-        <a href="{{ url_for('account') }}">
-            <i class="fa fa-2xl fa-user" aria-hidden="true"></i>
-        </a>
+        <div>
+            <a href="{{ url_for('account') }}">
+                <i class="fa fa-2xl fa-user" aria-hidden="true"></i>
+            </a>
+            {% if request.current_user.is_admin %}
+                <a href="{{ url_for('admin') }}">
+                    <i class="fa fa-2xl fa-cog" aria-hidden="true"></i>
+                </a>
+            {% endif %}
+        </div>
+
     {% endif %}
 </header>
