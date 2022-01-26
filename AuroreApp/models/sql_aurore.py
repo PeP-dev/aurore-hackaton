@@ -1,5 +1,5 @@
 from sqlparse import sql
-from AuroreApp.dataclasses.aurore_dataclasses import AuroreClass, Conditions, Heberge, Hebergeur, Logement
+from AuroreApp.dataclasses.aurore_dataclasses import AuroreClass, Conditions, Heberge, Hebergeur, Logement, Admin
 import AuroreApp.models.sql_request as sql_request
 import os
 
@@ -15,7 +15,7 @@ HOST,DATABASE,USER,PASSWORD = keys['HOST'],keys['DATABASE'],keys['USER'],keys['P
 
 class AuroreSQL(sql_request.Client):
 
-    SET_TABLES_CLASS= {Conditions,Logement,Heberge,Hebergeur}
+    SET_TABLES_CLASS= {Conditions,Logement,Heberge,Hebergeur,Admin}
     DICT_TABLES_NAME = {a.__name__.upper():a for a in SET_TABLES_CLASS}
     DICT_TABLES_CLASS = {a:a.__name__.upper() for a in SET_TABLES_CLASS}
 
