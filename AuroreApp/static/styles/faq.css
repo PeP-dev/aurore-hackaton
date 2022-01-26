@@ -4,7 +4,11 @@ details.qa {
     border-radius: 5px;
     color: var(--secondary-color);
     display:block;
+    margin-bottom:2em;
 }
 details.qa > summary.question {
     font-weight: bolder;
+}
+details.qa[open] > summary.question {
+    margin-bottom:1em;
 }

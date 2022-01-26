@@ -11,5 +11,13 @@
             <img class="logo" src="{{ url_for('static',filename='images/logo.png') }}" alt="Logo Aurore"/>
         </a>
     </div>
-    <i class="fa fa-2xl fa-sign-in" aria-hidden="true"></i>
+    {% if not user %}
+    <a href="{{url_for('login')}}">
+        <i class="fa fa-2xl fa-sign-in" aria-hidden="true"></i>
+    </a>
+    {% else %}
+    <a href="{{url_for('account')}}">
+        <i class="fa fa-2xl fa-user" aria-hidden="true"></i>
+    </a>
+    {% endif %}
 </header>

@@ -20,5 +20,6 @@ header > div {
 }
 
 header i.fa {
+    color:var(--main-color);
     font-size: 50px;
 }

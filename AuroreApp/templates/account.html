@@ -1,0 +1,20 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/global.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/form.css') }}">
+</head>
+<body>
+{% include 'header.html' %}
+<main>
+    <div class="main-content centered-flex">
+        <h3 class="title">Se déconnecter</h3>
+        <div class="box centered-flex">
+            <form method="POST" action="{{url_for('logout')}}" class="centered-flex form">
+                <input type="submit" class="button is-block is-info is-large is-fullwidth" value="Se déconnecter"/>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>
