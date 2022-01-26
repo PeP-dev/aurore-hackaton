@@ -50,5 +50,6 @@ input:required::after {
 }
 .row {
     flex-direction: row;
+    justify-content: center;
     gap:1em;
 }

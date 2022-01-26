@@ -47,12 +47,6 @@ def require_auth(f):
 def home_page():
     return render_template("index.html")
 
-
-@app.route("/faq", methods=["GET"])
-def faq():
-    return render_template("faq.html")
-
-
 @app.route("/pro", methods=["GET"])
 def pro_form():
     return render_template("pro.html")
