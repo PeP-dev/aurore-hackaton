@@ -36,6 +36,7 @@ class AuroreSQL(sql_request.Client):
 
     # GETTERS
     def get_objects_from_table(self, table_name: str) -> AuroreClass:
+        table_name = table_name.upper()
         self.test_name_is_table(table_name)
 
         # Récupération des attributs de classe (et donc table) pour la requête
@@ -55,19 +56,12 @@ class AuroreSQL(sql_request.Client):
         for sql_result in sql_list:
             # Création du dictionnaire attribut:valeur propre à la classe
             attributs = {}
-            print(args)
-            print(sql_list)
             for i in range(len(args)):
                 attributs[args[i]] = sql_result[i]
 
             res_liste.append(classe(**attributs))
 
         return res_liste
-
-        """
-        res_list = []
-        for res in sql_list :
-            res_list.append(classe())"""
 
         
         

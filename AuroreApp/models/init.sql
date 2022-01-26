@@ -1,4 +1,4 @@
-CREATE SCHEMA 'aurore';
+CREATE SCHEMA `aurore`;
 
 CREATE TABLE `aurore`.`heberge` (
   `id` INT NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE `aurore`.`hebergeur` (
   `id` INT NOT NULL,
   `login` VARCHAR(45),
   `password` VARCHAR(45),
-  `nom` VARCHAR(45)
+  `nom` VARCHAR(45),
   PRIMARY KEY (`id`));
 
 CREATE TABLE `aurore`.`logement` (

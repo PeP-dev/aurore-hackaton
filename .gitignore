@@ -1,5 +1,7 @@
 /hackaton-notes
 .idea/
 AuroreApp/__pycache__
+AuroreApp/dataclasses/__pycache__
+AuroreApp/models/__pycache__
 venv
 .env
