@@ -1,4 +1,61 @@
 .buttons {
     display: flex;
-    justify-content: space-around;
+    justify-content: stretch;
+    flex-grow:1;
+    gap:20px;
+    align-items: center;
+}
+.grid{
+    display: inline-grid;
+    grid-template-rows: 200px 200px;
+    grid-template-columns: 200px 200px;
+    grid-gap: 50px;
+}
+.grid-button {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid var(--main-color);
+    border-radius: 30px;
+    font-size: 1.5em;
+    font-weight: bolder;
+    text-decoration: none;
+    color:var(--main-color);
+}
+.main-menu {
+    flex: 1 1 auto;
+}
+body {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    margin:0;
+}
+main {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height:auto;
+    gap:50px;
+}
+.title {
+    font-size:5em;
+    font-family: "Sofia", sans-serif;
+    color:var(--main-color);
+}
+.description {
+    font-size:2em;
+    text-align: center;
+}
+.wrapper {
+    padding:20px;
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:20px;
 }

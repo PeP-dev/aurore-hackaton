@@ -8,6 +8,7 @@
     font-size: 1.2em;
     border:1px solid var(--secondary-color);
     transition:all .3s ease;
+    background: rgba(255,255,255,.8);
 }
 
 .field > input:focus-visible{
@@ -25,6 +26,7 @@ input:required::after {
     border: 2px solid var(--secondary-color);
     padding: 30px;
     border-radius: 10px;
+    background: rgba(255,255,255,.5);
     width:80%;
 }
 .box > form {
