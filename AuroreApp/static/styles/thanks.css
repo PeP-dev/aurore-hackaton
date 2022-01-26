@@ -1,8 +1,30 @@
 .thanks {
     color:var(--main-color);
     font-weight: bolder;
-    font-size: 3em;
-    margin-bottom: 2em;
-    margin-top: 2em;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
 
+html.thanks-page main{
+    font-weight: bolder;
+    font-size: 2rem;
+}
+html.thanks-page::before{
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity:.6;
+    background:url('../images/letter.jpg') no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    -moz-transform: none;
+    -o-transform: none;
+    -webkit-transform: none;
+    transform: none;
+    -ms-filter: none;
 }
