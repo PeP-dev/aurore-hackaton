@@ -12,12 +12,12 @@ class AuroreClass():
 @dataclass
 class Hebergeur(AuroreClass):
     id:int
-    nom:str
-    prenom:str
     mail:str
     mdp:str
-    tel:str
-    is_admin:int    
+    nom:str=None
+    prenom:str=None
+    tel:str=None
+    is_admin:int=0
 
 @dataclass
 class Logement(AuroreClass):

@@ -76,7 +76,9 @@ class Client(object):
         colonnes = "(" + "".join(colonnes) + ")"
         #Délétions des espaces en trop
         for i,v in enumerate(values) :
-            if type(v) == str :
+            if v == None :
+                values[i] = 'NULL'
+            elif type(v) == str :
                 values [i] = v.strip()
                 
         values = "(" + values.__str__()[1:-1] + ")"
