@@ -75,7 +75,7 @@ def pro():
 @app.route("/particulier", methods=["GET"])
 @require_auth
 def particulier():
-    return render_template("faq.html")
+    return render_template("particulier.html")
 
 
 @app.route("/account", methods=["GET"])
