@@ -106,7 +106,7 @@ def signup():
         return make_response(
             render_template('signup.html', error="Merci de renseigner le champ email"), 400)
 
-    if not data.get('password'):
+    if not password:
         return make_response(
             render_template('signup.html', error="Merci de renseigner le mort de passe"),
             400)
