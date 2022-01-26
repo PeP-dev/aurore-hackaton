@@ -2,22 +2,22 @@
     <head>
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
     </head>
-    <div>
-        <h1>
-            "Entr'ACT", souffler le temps d'une pause par
-        </h1>
-        <a href="{{url_for('home_page')}}">
-            <img class="logo" src="{{ url_for('static',filename='images/logo.png') }}" alt="Logo Aurore"/>
-        </a>
-    </div>
+    <a href="{{ url_for('home_page') }}" class="header-text">
+        <div class="font-entract">
+            Entr'ACT
+        </div>
+        par
+        <img class="logo" src="{{ url_for('static',filename='images/logo.png') }}" alt="Logo Aurore"/>
+    </a>
     {% if not request.current_user %}
-    <a href="{{url_for('login')}}">
-        <i class="fa fa-2xl fa-user-plus" aria-hidden="true"></i>
-    </a>
+        <a href="{{ url_for('login') }}">
+            <i class="fa fa-2xl fa-user-plus" aria-hidden="true"></i>
+        </a>
     {% else %}
-    <a href="{{url_for('account')}}">
-        <i class="fa fa-2xl fa-user" aria-hidden="true"></i>
-    </a>
+        <a href="{{ url_for('account') }}">
+            <i class="fa fa-2xl fa-user" aria-hidden="true"></i>
+        </a>
     {% endif %}
 </header>

@@ -3,28 +3,107 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/global.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/header.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/homepage.css') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/faq.css') }}">
 </head>
 <body>
-{% include 'header.html' %}
-<main>
-    <div class="wrapper">
-        <h1 class="title">
-            Entr'ACT
-        </h1>
-        <div class="description">
-            Initiative solidaire d'aide au logement pour les individus en situation de précarité
+<div class="height-wrapper">
+    {% include 'header.html' %}
+    <main>
+        <div class="wrapper">
+            <h1 class="title">
+                Entr'ACT
+            </h1>
+            <div class="description">
+                Initiative solidaire d'aide au logement pour les individus en situation de précarité
+            </div>
         </div>
-    </div>
 
-    <div class="wrapper">
-        <div class="grid">
-            <a class="grid-button" href="{{url_for('faq')}}">FAQ</a>
-            <a class="grid-button" href="{{url_for('pro_form')}}">A propos d'Aurore</a>
-            <a class="grid-button" href="{{url_for('particulier')}}">Je suis un particulier</a>
-            <a class="grid-button" href="{{url_for('pro_form')}}">Je suis un professionnel</a>
+        <div class="wrapper">
+            <div class="grid">
+                <a class="grid-button" href="#faq">FAQ</a>
+                <a class="grid-button" href="#about">A propos d'Aurore</a>
+                <a class="grid-button" href="{{ url_for('particulier') }}">Je suis un particulier</a>
+                <a class="grid-button" href="{{ url_for('pro_form') }}">Je suis un professionnel</a>
+            </div>
         </div>
+    </main>
+</div>
+<div class="main-content">
+    <article id="about" class="about">
+        <h2>
+            A propos d'Aurore
+        </h2>
+        <p>
+            <strong>
+                Créée en 1871, l’association Aurore héberge, soigne et accompagne plus de 41 300 personnes en
+                situation
+                de précarité ou d’exclusion vers une insertion sociale et professionnelle.
+            </strong>
+        </p>
+        <p>
+            <strong>
+                Reconnue d’utilité publique depuis 1875, Aurore s’appuie sur son expérience pour proposer et
+                expérimenter
+                des formes innovantes de prises en charge, qui s’adaptent à l’évolution des phénomènes de précarité
+                et
+                d’exclusion
+            </strong>.
+        </p>
+        <p>
+            L’association travaille en partenariat avec l’Etat, les collectivités locales, les régions, les
+            départements
+            et
+            les communes. Le dialogue avec les autorités qui financent les actions est permanent, en cohérence avec
+            les
+            besoins recensés sur ses territoires d'intervention. Aurore intervient principalement en Île-de-France
+            et
+            dans 7
+            autres régions (Nouvelle-Aquitaine, Occitanie, Centre-Val de Loire, Auvergne-Rhône-Alpes, Grand-Est,
+            Hauts-de-France et Pays-de-la-Loire).
+        </p>
+        <p>
+            Organisées autour de trois missions, hébergement, soin et insertion, ses activités sont multiples&nbsp;:
+            maraudes, accueil et l’hébergement de personnes en situation d’addiction, activités de réinsertion
+            sociale
+            et
+            professionnelle à destination de personnes en rupture d’emploi ou handicapées, hébergement et
+            accompagnement
+            de
+            femmes victimes de violences, soins de personnes en situation de précarité, hébergement et
+            accompagnement de
+            personnes en souffrance psychique.
+        </p>
+        <p>
+            <strong>
+                Sur ce site, vous avez la possibilité de participer à notre initiative solidaire en permettant à des
+                personnes en situation de précarité de se retrouver seules ou en famille, en dehors d'un cadre de
+                co-habitation parfois complexe.
+            </strong>
+        </p>
+
+        <p class="text-main">
+            <strong>
+                La mise à disposition d'un hébergement pendant une durée choisie étant faite dans une initiative
+                bénévole, elle est non rémunérable.
+            </strong>
+        </p>
+    </article>
+    <div id ="faq" class="faq">
+        <h2>FAQ</h2>
+        <details class="qa">
+            <summary class="question">
+                Question très pertinente
+            </summary>
+            Réponse encore plus pertinente
+        </details>
+        <details class="qa">
+            <summary class="question">
+                Question bête
+            </summary>
+            Réponse bête
+        </details>
     </div>
-</main>
+</div>
+
 </body>
 </html>

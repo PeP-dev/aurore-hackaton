@@ -4,10 +4,23 @@ header {
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    border-bottom: 1px solid #bdbdbd;
     margin-bottom: 30px;
     padding: 10px;
     color: var(--main-color);
+}
+
+.header-text {
+    display:flex;
+    flex-direction: row;
+    font-size:3em;
+    text-decoration: none;
+    gap:25px;
+    align-items: center;
+    color:var(--main-color)
+}
+.font-entract {
+    font-family: "Sofia", sans-serif;
+    display: inline;
 }
 header > div {
     display: flex;
@@ -17,7 +30,7 @@ header > div {
 }
 
 .logo {
-    max-width: 130px;
+    max-width: 300px;
 }
 
 header i.fa {
