@@ -1,5 +1,11 @@
 CREATE SCHEMA `aurore`;
 
+DROP TABLE aurore.heberge;
+DROP TABLE aurore.user;
+DROP TABLE aurore.hebergeur;
+DROP TABLE aurore.logement;
+DROP TABLE aurore.conditions;
+
 CREATE TABLE `aurore`.`heberge` (
   `id` INT NOT NULL,
   `nom` VARCHAR(45) NULL,
@@ -8,10 +14,11 @@ CREATE TABLE `aurore`.`heberge` (
   `mail` VARCHAR(45) NULL,
   PRIMARY KEY (`id`));
 
-CREATE TABLE `aurore`.`admin` (
+CREATE TABLE `aurore`.`user` (
   `id` INT NOT NULL,
-  `login` VARCHAR(45),
+  `email` VARCHAR(255),
   `password` VARCHAR(45),
+  `isAdmin` BOOLEAN,
   PRIMARY KEY (`id`));
 
 CREATE TABLE `aurore`.`hebergeur` (

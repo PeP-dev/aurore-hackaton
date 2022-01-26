@@ -4,7 +4,7 @@ from datetime import timedelta, datetime
 from functools import wraps
 
 import jwt
-from flask import request, render_template, jsonify, make_response, redirect, url_for
+from flask import request, render_template, make_response, redirect, url_for
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -13,7 +13,6 @@ from AuroreApp.user_service import MockUserService, User
 
 user_service = MockUserService()
 
-# TODO : Env
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 
 
