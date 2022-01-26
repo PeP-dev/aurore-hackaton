@@ -13,7 +13,7 @@ if __name__ == "__main__" :
         if add :
             heberge = Heberge(1,'Marc','Carm','0651428688')
             condition = CondLogement(3,1,'Non fumeur')
-            hebergeur = Hebergeur(1,'Michèle','Tu connais','michele@gmail.com','ouaf','0651428688',1)
+            hebergeur = Hebergeur(1,None,None,'michele@gmail.com','ouaf','0651428688',1)
             hebergeur2 = Hebergeur(2,'Michèle','Pain','michele.pain@gmail.com','ouaf2','0651428658',0)
 
             client.insert_objects([heberge,condition,hebergeur,hebergeur2])
