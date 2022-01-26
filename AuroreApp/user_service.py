@@ -20,6 +20,9 @@ class AbstractUserService:
 
     def get_user_by_email(self, email):
         raise Exception("Not implemented")
+    
+    def del_user(self, user:User):
+        raise Exception("Not implemented")
 
 
 class MockUserService(AbstractUserService):
@@ -37,28 +40,42 @@ class MockUserService(AbstractUserService):
 
     def add_user(self, user: User):
         self.users[user.id] = user
+    
+    def del_user(self,user:User):
+        self.users.__delitem__(user.id)
+    
 
 
 class SQLUserService(AbstractUserService):
     def __init__(self):
         pass
 
-    def get_user_by_id(self, _id):
+    def get_user_by_id(self, _id)->Hebergeur:
         with AuroreSQL() as client :
-            user_list = client.get_table('HEBERGEUR')
+            user_list = client.get_objects_from_table('HEBERGEUR')
             for user in user_list :
                 if _id == user.id :
                     return user
 
-    def get_user_by_email(self, email):
+    def get_user_by_email(self, email)->Hebergeur:
         with AuroreSQL() as client :
-            user_list = client.get_table('HEBERGEUR')
+            user_list = client.get_objects_from_table('HEBERGEUR')
             for user in user_list :
                 if user.mail == email :
                     return user
         return None
 
-    def add_user(self, user: User):
+    def add_user(self, user: Hebergeur)->None:
         with AuroreSQL() as client :
-            new_user = Hebergeur(user.id,user.email,user.pwd,None,None,None,0)
+            client.insert_object(user)
+    
+    def add_user_more(self,_id,email,pwd,nom,prenom,tel,is_admin=0)->None :
+        new_user = Hebergeur(_id,email,pwd,nom,prenom,tel,is_admin)
+        with AuroreSQL() as client :
             client.insert_object(new_user)
+    
+    def del_user(self,user:User)->None:
+        if not(self.get_user_by_id(user.id) == None) :
+            with AuroreSQL() as client :
+                sql_text = client.fast_delete_on_pk('HEBERGEUR','id',user.id)
+                client.process_send(sql_text)

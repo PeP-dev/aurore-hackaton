@@ -1,4 +1,5 @@
 import os
+from typing import final
 import uuid
 from datetime import timedelta, datetime
 from functools import wraps
@@ -10,9 +11,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from AuroreApp import app
 from AuroreApp.mailing_service import MailgunMailingService, Mail
-from AuroreApp.user_service import MockUserService, User
+from AuroreApp.user_service import MockUserService, SQLUserService
+from AuroreApp.dataclasses.aurore_dataclasses import Hebergeur
 
-user_service = MockUserService()
+user_service = SQLUserService()
 mailing_service = MailgunMailingService(os.getenv('MAILGUN_API_KEY'), os.getenv('MAILGUN_DOMAIN'))
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 
@@ -72,10 +74,31 @@ def pro():
     return render_template("thanks.html")
 
 
-@app.route("/particulier", methods=["GET"])
+@app.route("/particulier", methods=["GET","POST"])
 @require_auth
 def particulier():
-    return render_template("particulier.html")
+    #GET
+    if request.method == "GET" :
+        return render_template("particulier.html")
+    #POST
+    elif request.method == "POST" :
+        form = request.form
+        user:Hebergeur = request.current_user
+        
+        _id = user.id
+        _email = user.mail
+        _pwd = user.mdp
+        user_service.del_user(user)
+        
+        _nom = form['nom']
+        _prenom = form['prenom']
+        try :
+            _telephone = form.get('telephone')
+        except KeyError as ke:
+            _telephone = None
+        user_service.add_user_more(_id,_email,_pwd,_nom,_prenom,_telephone)
+
+        return render_template("thanks.html")
 
 
 @app.route("/account", methods=["GET"])
@@ -91,7 +114,7 @@ def signup():
     data = request.form
 
     # gets name, email and password
-    email, identity = data.get('email'), data.get('identity')
+    email= data.get('email')
     password = str(data.get('password'))
     if not data.get('particulier'):
         return make_response(
@@ -115,7 +138,7 @@ def signup():
     user = user_service.get_user_by_email(email)
 
     if not user:
-        new_user = User(str(uuid.uuid4()), identity, email, generate_password_hash(password), False)
+        new_user = Hebergeur(str(uuid.uuid4()), email, generate_password_hash(password),None,None,None,0)
         user_service.add_user(new_user)
         return make_response(render_template('login.html'), 201)
     else:
@@ -162,11 +185,12 @@ def login():
             render_template('login.html', error="Merci de renseigner le mot de passe"), 400)
 
     user = user_service.get_user_by_email(auth.get('email'))
+    print(user)
     if not user:
         # returns 401 if user does not exist
         return make_response(render_template('login.html', error="Email invalide"), 400)
 
-    if check_password_hash(user.pwd, str(auth.get('password'))):
+    if check_password_hash(user.mdp, str(auth.get('password'))):
         # generates the JWT Token
         token = jwt.encode({
             'public_id': user.id,
