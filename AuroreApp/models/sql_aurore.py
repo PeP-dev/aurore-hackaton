@@ -1,5 +1,5 @@
 from sqlparse import sql
-from AuroreApp.dataclasses.aurore_dataclasses import AuroreClass, Conditions, Heberge, Hebergeur, Logement, Admin
+from AuroreApp.dataclasses.aurore_dataclasses import *
 import AuroreApp.models.sql_request as sql_request
 import os
 
@@ -7,7 +7,7 @@ HOST, DATABASE, USER, PASSWORD = os.getenv('HOST'), os.getenv('DATABASE'), os.ge
 
 
 class AuroreSQL(sql_request.Client):
-    SET_TABLES_CLASS = {Conditions, Logement, Heberge, Hebergeur, Admin}
+    SET_TABLES_CLASS = {CondLogement, Logement, Heberge, Hebergeur}
     DICT_TABLES_NAME = {a.__name__.upper(): a for a in SET_TABLES_CLASS}
     DICT_TABLES_CLASS = {a: a.__name__.upper() for a in SET_TABLES_CLASS}
 
@@ -35,7 +35,7 @@ class AuroreSQL(sql_request.Client):
         self.process_send(sql_string)
 
     # GETTERS
-    def get_objects_from_table(self, table_name: str) -> AuroreClass:
+    def get_objects_from_table(self, table_name: str) -> list:
         table_name = table_name.upper()
         self.test_name_is_table(table_name)
 
@@ -63,8 +63,21 @@ class AuroreSQL(sql_request.Client):
 
         return res_liste
 
+    # SERVICES
+    def is_admin(self,_id):
+        user_list:list = self.get_objects_from_table('HEBERGEUR')
+        filter_by_id = [i for i in user_list if (i.id == _id)]
+        length = len(filter_by_id)
         
-        
+        match length :
+            case 0 :
+                raise KeyError(f"No references found for id={_id}")
+            case 1 :
+                return filter_by_id[0].is_admin
+            case _ :
+                raise KeyError(f"Multiple references found for id={_id} : {filter_by_id}")
+
+    
 
 
     

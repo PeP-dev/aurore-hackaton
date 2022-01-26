@@ -1,6 +1,6 @@
 CREATE DATABASE `aurore` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
-CREATE TABLE `condlongement` (
+CREATE TABLE `condlogement` (
   `id` int NOT NULL,
   `logement_id` int DEFAULT NULL,
   `libelle` varchar(45) DEFAULT NULL,
