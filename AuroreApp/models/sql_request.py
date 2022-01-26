@@ -96,5 +96,3 @@ class Client(object):
             print("Connexion closed")
         self.close()     
 
-if __name__ == "__main__" :
-    pass

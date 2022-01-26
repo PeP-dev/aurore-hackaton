@@ -1,14 +1,13 @@
 from dataclasses import dataclass
-import dataclasses
 from sqlite3 import Date
 
 class AuroreClass():
-    def get_class_name(self):
-        return self.__class__.__name__
+    def get_table_name(self):
+        return self.__class__.__name__.upper()
     def get_attr_names(self):
-        return self.__dict__.keys()
+        return list(self.__dict__.keys())
     def get_attr_values(self):
-        return self.__dict__.values
+        return list(self.__dict__.values())
 
 @dataclass
 class Hebergeur(AuroreClass):
@@ -33,7 +32,7 @@ class Heberge(AuroreClass):
     tel:str
 
 @dataclass
-class Condition(AuroreClass):
+class Conditions(AuroreClass):
     id:int
     libelle:str
 
