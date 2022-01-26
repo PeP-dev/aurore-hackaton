@@ -30,6 +30,10 @@ class AuroreSQL(sql_request.Client):
         sql_string = self.fast_insert(objet.get_table_name(), objet.get_attr_names(), objet.get_attr_values())
         self.process_send(sql_string)
 
+    def insert_objects(self,objets:list):
+        for objet in objets :
+            self.insert_object(objet)
+
     def delete_on_pk(self, table: str, pkey_name, pkey):
         sql_string = self.fast_delete_on_pk(table, pkey_name, pkey)
         self.process_send(sql_string)
