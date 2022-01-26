@@ -3,15 +3,7 @@ from AuroreApp.dataclasses.aurore_dataclasses import AuroreClass, Conditions, He
 import AuroreApp.models.sql_request as sql_request
 import os
 
-#En attendant-------
-os.environ['HOST'] = 'localhost'
-os.environ['DATABASE'] = 'aurore'
-os.environ['USER'] = 'root'
-os.environ['PASSwORD'] = 'root'
-#-------------------
-
-keys = os.environ
-HOST,DATABASE,USER,PASSWORD = keys['HOST'],keys['DATABASE'],keys['USER'],keys['PASSWORD']
+HOST,DATABASE,USER,PASSWORD = os.getenv('HOST'),os.getenv('DATABASE'),os.getenv('USER'),os.getenv('PASSWORD')
 
 class AuroreSQL(sql_request.Client):
 

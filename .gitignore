@@ -2,3 +2,4 @@
 .idea/
 AuroreApp/__pycache__
 venv
+.env
