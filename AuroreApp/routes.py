@@ -9,10 +9,11 @@ from flask import request, render_template, make_response, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from AuroreApp import app
+from AuroreApp.mailing_service import MailgunMailingService, Mail
 from AuroreApp.user_service import MockUserService, User
 
 user_service = MockUserService()
-
+mailing_service = MailgunMailingService(os.getenv('MAILGUN_API_KEY'), os.getenv('MAILGUN_DOMAIN'))
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 
 
@@ -59,6 +60,15 @@ def pro_form():
 
 @app.route("/pro", methods=["POST"])
 def pro():
+    data = request.form
+    entreprise = data.get("entreprise")
+    mail = Mail(["vautier.paul14350@gmail.com"], "Demande de contact Entr'ACT : {name}".format(name=str(entreprise)),
+                "Ceci est un mail automatique envoyé par l'API Entr'ACT, L'entreprise {name} a effectué une demande de contact.\nContact :\n Mail : {mail}\nTéléphone : {tel}".format(
+                    name=entreprise,
+                    mail=data.get("email"),
+                    tel=data.get("telephone", default="non fourni")
+                ))
+    print(mailing_service.send_mail(mail))
     return render_template("thanks.html")
 
 
@@ -148,7 +158,6 @@ def login():
             render_template('login.html', error="Merci de renseigner le champ email"), 400)
 
     if not auth.get('password'):
-        print("password")
         return make_response(
             render_template('login.html', error="Merci de renseigner le mot de passe"), 400)
 
@@ -157,7 +166,7 @@ def login():
         # returns 401 if user does not exist
         return make_response(render_template('login.html', error="Email invalide"), 400)
 
-    if check_password_hash(user.pwd, auth.get('password')):
+    if check_password_hash(user.pwd, str(auth.get('password'))):
         # generates the JWT Token
         token = jwt.encode({
             'public_id': user.id,
