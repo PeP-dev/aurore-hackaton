@@ -1,0 +1,65 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/global.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/homepage.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/form.css') }}">
+</head>
+<body>
+{% include 'header.html' %}
+<main>
+    <div class="main-content">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas posuere arcu eget sodales pulvinar. Nam et
+            velit ipsum. Nunc pellentesque molestie erat, sed lobortis massa tristique id. Aenean ac quam vel leo
+            egestas
+            euismod. Curabitur eu risus pharetra, euismod ante a, iaculis quam. Mauris nulla mi, ornare non dapibus at,
+            cursus id velit. Suspendisse congue nunc vitae condimentum blandit.
+
+            Donec mattis ex dictum velit congue sagittis. Donec placerat, dolor nec vulputate tempor, velit justo
+            facilisis
+            neque, nec convallis massa diam id nisl. Nullam lorem nunc, convallis eget rutrum ut, suscipit in nulla.
+            Donec
+            molestie, nisl non rutrum molestie, lorem nibh placerat nisl, a scelerisque ex metus in ipsum. Interdum et
+            malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis feugiat elementum. Aliquam erat
+            volutpat. Nulla eget sem eu leo suscipit lacinia a at enim. Quisque viverra consequat quam, in ultricies sem
+            aliquam et. Donec vitae diam justo. Cras molestie lacus at dignissim luctus. Sed sed dui ornare, malesuada
+            arcu
+            ut, tincidunt ligula. Donec accumsan consectetur libero, sit amet consectetur diam efficitur ut. Suspendisse
+            mattis tellus eu nibh dignissim volutpat. Maecenas sagittis pellentesque lectus at maximus. Nulla eu nibh et
+            odio cursus gravida a nec nibh.
+
+            Praesent vitae ipsum vestibulum, rhoncus arcu a, efficitur augue. Integer ornare ultrices purus, sit amet
+            interdum diam malesuada non. Phasellus tortor sapien, venenatis et lacus sed, volutpat vehicula tellus. Nunc
+            pretium purus eget ligula aliquam, pellentesque interdum orci lacinia. Suspendisse potenti. Cras sed arcu
+            nisi.
+            Suspendisse potenti. Maecenas efficitur diam quam, id porttitor odio commodo non.
+
+            Curabitur volutpat sem libero, et blandit nisi elementum in. Pellentesque ornare sollicitudin blandit.
+            Aliquam
+            erat volutpat. Praesent mollis lacinia dolor luctus pretium. Sed ut tincidunt mauris, non maximus quam. Cras
+            aliquet, neque ac posuere tempus, diam urna fermentum ligula, at porta lectus tellus a mi. Pellentesque vel
+            porttitor dolor, nec dictum diam. Nunc gravida, tortor vel tempus condimentum, risus nibh ullamcorper ipsum,
+            eu
+            cursus nulla elit ut nibh. Vivamus scelerisque velit justo, non vulputate massa porttitor in. Fusce nec
+            ligula
+            sodales, tincidunt magna et, pharetra nisl. Sed leo sem, vestibulum a feugiat at, aliquet molestie metus.
+
+        </p>
+        <form method="POST" action="/pro" class="centered-flex form">
+            <div class="field centered-flex row">
+                <input class="input is-medium" type="email" name="email" placeholder="Email" autofocus="" required>
+                <input class="input is-medium" type="text" name="entreprise" placeholder="Entreprise" autofocus=""
+                       required>
+                <input class="input is-medium" type="tel" name="telephone" placeholder="Téléphone (optionel)"
+                       autofocus="">
+            </div>
+            <div class="field centered-flex">
+                <textarea placeholder="Description de l'hébergement (optionel)" value=""></textarea>
+            </div>
+            <input type="submit" class="button is-block is-info is-large is-fullwidth" value="Terminer"/>
+        </form>
+    </div>
+</main>
+</body>
+</html>

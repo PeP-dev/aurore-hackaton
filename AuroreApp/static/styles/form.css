@@ -2,7 +2,7 @@
     width:90%;
     margin:10px;
 }
-.field > input{
+.field > input, .field > textarea {
     padding:15px;
     border-radius: 5px;
     font-size: 1.2em;
@@ -13,6 +13,13 @@
 .field > input:focus-visible{
     outline:none;
     border:1px solid var(--main-color);
+}
+input:required::after {
+    display: block;
+    content: "*dfgkdfbgdfbhgbfhbfghfhghgfhgfhgfhgfhgfhgfhgfhgfhgfhgfhh";
+    color:red;
+    position: absolute;
+    top:0;
 }
 .box {
     border: 2px solid var(--secondary-color);
@@ -32,4 +39,14 @@
 .error {
     color: #ff3838;
     font-weight: bold;
+}
+.field > textarea {
+    width:90%;
+    resize:none;
+    height: 150px;
+    font-family: inherit;
+}
+.row {
+    flex-direction: row;
+    gap:1em;
 }

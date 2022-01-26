@@ -17,10 +17,10 @@
             {% endif %}
             <form method="POST" action="/login" class="centered-flex form">
                 <div class="field centered-flex">
-                    <input class="input is-medium" type="email" name="email" placeholder="Email" autofocus="">
+                    <input class="input is-medium" type="email" name="email" placeholder="Email" autofocus="" required>
                 </div>
                 <div class="field centered-flex">
-                    <input class="input is-large" type="password" name="password" placeholder="Mot de passe">
+                    <input class="input is-large" type="password" name="password" placeholder="Mot de passe" required>
                 </div>
                 <label class="checkbox">
                     <input type="checkbox" name="remember">
@@ -33,6 +33,11 @@
                     </a>
                 </div>
                 <input type="submit" class="button is-block is-info is-large is-fullwidth" value="Se connecter"/>
+                <input
+                        type="hidden"
+                        name="next"
+                        value="{{ request.args.get('next', 'home_page') }}"
+                />
             </form>
         </div>
     </div>

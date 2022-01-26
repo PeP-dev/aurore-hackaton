@@ -35,6 +35,13 @@ html {
     align-items: center;
 }
 
- .text-main {
+
+p {
+    font-size: 1.1em;
+    line-height: 1.68em;
+}
+
+
+.text-main {
      color: var(--main-color)
  }

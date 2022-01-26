@@ -1,0 +1,21 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/global.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/thanks.css') }}">
+</head>
+<body>
+{% include 'header.html' %}
+<main>
+    <div class="main-content">
+        <h3 class="title">Confirmation de déclaration de logement vacant</h3>
+        <div class="box centered-flex">
+            <strong class="thanks">Merci</strong>
+            La notification de logement vacant à bien été envoyée, toute l'équipe vous remercie pour votre participation
+            à notre initiative solidaire
+        </div>
+    </div>
+
+</main>
+</body>
+</html>

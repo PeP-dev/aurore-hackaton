@@ -36,7 +36,7 @@ def require_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         if request.current_user is None:
-            return make_response(render_template('unauthorized.html'), 403)
+            return redirect(url_for('login', next=f.__name__))
         return f(*args, **kwargs)
 
     return decorated
@@ -44,28 +44,34 @@ def require_auth(f):
 
 @app.route("/", methods=["GET"])
 def home_page():
-    return render_template("index.html", user=request.current_user)
+    return render_template("index.html")
 
 
 @app.route("/faq", methods=["GET"])
 def faq():
-    return render_template("faq.html", user=request.current_user)
+    return render_template("faq.html")
 
 
 @app.route("/pro", methods=["GET"])
+def pro_form():
+    return render_template("pro.html")
+
+
+@app.route("/pro", methods=["POST"])
 def pro():
-    return render_template("faq.html", user=request.current_user)
+    return render_template("thanks.html")
 
 
 @app.route("/particulier", methods=["GET"])
+@require_auth
 def particulier():
-    return render_template("faq.html", user=request.current_user)
+    return render_template("faq.html")
 
 
 @app.route("/account", methods=["GET"])
 @require_auth
 def account():
-    return make_response(render_template('account.html', user=request.current_user), 401)
+    return make_response(render_template('account.html'), 401)
 
 
 # signup route
@@ -76,23 +82,23 @@ def signup():
 
     # gets name, email and password
     email, identity = data.get('email'), data.get('identity')
-    password = data.get('password')
+    password = str(data.get('password'))
+    if not data.get('particulier'):
+        return make_response(
+            render_template('signup.html', error="La création de compte est réservée aux particuliers"))
 
     if not data:
-        print("data")
         # returns 401 if any email or / and password is missing
-        return make_response(render_template('signup.html', error="Formulaire invalide", user=request.current_user),
+        return make_response(render_template('signup.html', error="Formulaire invalide"),
                              401)
 
     if not data.get('email'):
-        print("email")
         return make_response(
-            render_template('signup.html', error="Merci de renseigner le champ email", user=request.current_user), 400)
+            render_template('signup.html', error="Merci de renseigner le champ email"), 400)
 
     if not data.get('password'):
-        print("password")
         return make_response(
-            render_template('signup.html', error="Merci de renseigner le mort de passe", user=request.current_user),
+            render_template('signup.html', error="Merci de renseigner le mort de passe"),
             400)
 
     # checking for existing user
@@ -101,22 +107,23 @@ def signup():
     if not user:
         new_user = User(str(uuid.uuid4()), identity, email, generate_password_hash(password), False)
         user_service.add_user(new_user)
-        return make_response(render_template('login.html', user=request.current_user), 201)
+        return make_response(render_template('login.html'), 201)
     else:
         # returns 202 if user already exists
         return make_response(
-            render_template('signup.html', error='Cette adresse mail est déjà utilisée pour un compte Aurore',
-                            user=request.current_user), 202)
+            render_template('signup.html', error='Cette adresse mail est déjà utilisée pour un compte Aurore'), 202)
 
 
 @app.route('/login', methods=['GET'])
 def login_form():
-    return render_template('login.html', user=request.current_user)
+    if request.args.get('next', ''):
+        return render_template('login.html', error="Une authentification est nécessaire pour accéder à cette page")
+    return render_template('login.html')
 
 
 @app.route('/signup', methods=['GET'])
 def signup_form():
-    return render_template('signup.html', user=request.current_user)
+    return render_template('signup.html')
 
 
 @app.route('/logout', methods=['POST'])
@@ -133,24 +140,22 @@ def login():
     auth = request.form
 
     if not auth:
-        print("auth")
         # returns 401 if any email or / and password is missing
-        return make_response(render_template('login.html', error="Formulaire invalide", user=request.current_user), 401)
+        return make_response(render_template('login.html', error="Formulaire invalide"), 401)
 
     if not auth.get('email'):
-        print("email")
         return make_response(
-            render_template('login.html', error="Merci de renseigner le champ email", user=request.current_user), 400)
+            render_template('login.html', error="Merci de renseigner le champ email"), 400)
 
     if not auth.get('password'):
         print("password")
         return make_response(
-            render_template('login.html', error="Merci de renseigner le mot de passe", user=request.current_user), 400)
+            render_template('login.html', error="Merci de renseigner le mot de passe"), 400)
 
     user = user_service.get_user_by_email(auth.get('email'))
     if not user:
         # returns 401 if user does not exist
-        return make_response(render_template('login.html', error="Email invalide", user=request.current_user), 400)
+        return make_response(render_template('login.html', error="Email invalide"), 400)
 
     if check_password_hash(user.pwd, auth.get('password')):
         # generates the JWT Token
@@ -159,10 +164,16 @@ def login():
             'exp': datetime.utcnow() + timedelta(days=90)
         }, app.config['SECRET_KEY'], algorithm='HS256')
 
-        res = make_response(render_template('index.html', user=user), 201)
+        location = auth.get('next')
 
+        if location:
+            res = redirect(url_for(location))
+        else:
+            res = make_response(render_template('index.html'), 201)
+
+        request.current_user = user
         res.set_cookie("aurore_login", token)
 
         return res
         # returns 403 if password is wrong
-    return make_response(render_template('login.html', error="Mot de passe invalide", user=request.current_user), 400)
+    return make_response(render_template('login.html', error="Mot de passe invalide"), 400)
