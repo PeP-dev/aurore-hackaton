@@ -32,7 +32,6 @@ class MockUserService(AbstractUserService):
 
     def get_user_by_email(self, email):
         for user in self.users.values():
-            print(user, email)
             if user.email == email:
                 return user
 
