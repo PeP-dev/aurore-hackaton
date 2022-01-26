@@ -68,3 +68,9 @@ class AuroreSQL(sql_request.Client):
         res_list = []
         for res in sql_list :
             res_list.append(classe())"""
+
+        
+        
+
+
+    
