@@ -1,0 +1,32 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/global.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/homepage.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/form.css') }}">
+</head>
+<body>
+{% include 'header.html' %}
+<main>
+    <div class="main-content">
+        <p>
+            Texte pour expliquer aux particulier qu'il faut mettre ses coordonnées
+        </p>
+        <form method="POST" action="/particulier" class="centered-flex form">
+            <div class="field centered-flex row">
+                {#Nom#}
+                <input class="input is-medium" type="text" name="nom" placeholder="Nom" autofocus="" required>
+                {#Prénom#}
+                <input class="input is-medium" type="text" name="prenom" placeholder="Prénom" autofocus="" required>
+                {#Téléphone#}
+                <input class="input is-medium" type="tel" name="telephone" placeholder="Téléphone (optionel)" autofocus="">
+            </div>
+            <div class="field centered-flex">
+                <textarea placeholder="Description de vos ambitions (optionel)" value=""></textarea>
+            </div>
+            <input type="submit" class="button is-block is-info is-large is-fullwidth" value="Terminer"/>
+        </form>
+    </div>
+</main>
+</body>
+</html>
