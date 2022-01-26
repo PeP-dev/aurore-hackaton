@@ -16,6 +16,7 @@ user_service = MockUserService()
 # TODO : Env
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 
+
 # decorator for verifying the JWT
 @app.before_request
 def check_auth():
