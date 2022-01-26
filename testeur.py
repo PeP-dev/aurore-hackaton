@@ -6,8 +6,7 @@ from dataclasses import dataclass
 
 if __name__ == "__main__" :
     add = True
-    delete = False
-
+    delete = True
     with AuroreSQL() as client :
         
         if delete :
@@ -21,5 +20,7 @@ if __name__ == "__main__" :
             client.insert_object(condition)
 
 
-        client.get_objects_from_table('CONDITIONS')
-        client.get_objects_from_table('HEBERGE')
+        print(
+            client.get_objects_from_table('CONDITIONS'),
+            client.get_objects_from_table('HEBERGE')
+            )
