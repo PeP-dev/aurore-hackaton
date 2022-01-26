@@ -1,43 +1,36 @@
-CREATE SCHEMA `aurore`;
+CREATE DATABASE `aurore` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
-DROP TABLE aurore.heberge;
-DROP TABLE aurore.user;
-DROP TABLE aurore.hebergeur;
-DROP TABLE aurore.logement;
-DROP TABLE aurore.conditions;
+CREATE TABLE `condlogement` (
+  `id` int NOT NULL,
+  `logement_id` int DEFAULT NULL,
+  `libelle` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `aurore`.`heberge` (
-  `id` INT NOT NULL,
-  `nom` VARCHAR(45) NULL,
-  `prenom` VARCHAR(45) NULL,
-  `tel` BIGINT(10) NULL,
-  `mail` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`));
+CREATE TABLE `heberge` (
+  `id` int NOT NULL,
+  `nom` varchar(45) DEFAULT NULL,
+  `prenom` varchar(45) DEFAULT NULL,
+  `infos` mediumtext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `aurore`.`user` (
-  `id` INT NOT NULL,
-  `email` VARCHAR(255),
-  `password` VARCHAR(45),
-  `isAdmin` BOOLEAN,
-  PRIMARY KEY (`id`));
+CREATE TABLE `hebergeur` (
+  `id` int NOT NULL,
+  `nom` varchar(45) DEFAULT NULL,
+  `prenom` varchar(45) DEFAULT NULL,
+  `mail` varchar(45) NOT NULL,
+  `mdp` varchar(45) NOT NULL,
+  `tel` varchar(45) DEFAULT NULL,
+  `is_admin` tinyint DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `aurore`.`hebergeur` (
-  `id` INT NOT NULL,
-  `login` VARCHAR(45),
-  `password` VARCHAR(45),
-  `nom` VARCHAR(45),
-  PRIMARY KEY (`id`));
+CREATE TABLE `logement` (
+  `id` int NOT NULL,
+  `hebergeur_id` int DEFAULT NULL,
+  `nombre_place` int DEFAULT NULL,
+  `adresse` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `aurore`.`logement` (
-  `id` INT NOT NULL,
-  `debut` VARCHAR(45),
-  `fin` VARCHAR(45),
-  `adresse` VARCHAR(45),
-  `tel` BIGINT(10),
-  `mail` VARCHAR(45),
-  PRIMARY KEY (`id`));
-
-CREATE TABLE `aurore`.`conditions` (
-  `id` INT NOT NULL,
-  `libelle` VARCHAR(45),
-  PRIMARY KEY (`id`));

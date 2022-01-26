@@ -12,35 +12,32 @@ class AuroreClass():
 @dataclass
 class Hebergeur(AuroreClass):
     id:int
-    login:str
-    password:str
     nom:str
+    prenom:str
+    mail:str
+    mdp:str
+    tel:str
+    is_admin:int    
 
 @dataclass
 class Logement(AuroreClass):
     id:int
-    debut:Date
-    fin:Date
+    hebergeur_id:int
+    nombre_place:int
     adresse:str
-    tel:str
 
 @dataclass
 class Heberge(AuroreClass):
     id:int
     nom:str
     prenom:str
-    tel:str
+    infos:str
 
 @dataclass
-class Conditions(AuroreClass):
+class CondLogement(AuroreClass):
     id:int
+    logement_id:int
     libelle:str
 
-@dataclass
-class Admin(AuroreClass):
-    id:int
-    login:str
-    password:str
-
 if __name__ == "__main__" :
-    a = Admin(1,'oui','oui')
+    pass
