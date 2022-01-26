@@ -1,4 +1,5 @@
 /hackaton-notes
 .idea/
 AuroreApp/__pycache__
+venv
 .env

@@ -1,0 +1,26 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <header>
+            Offres d'hébergements
+        </header>
+        
+        <ul id="bulletlist_offres">
+            {% for item in list_offres %}
+                <li>
+                    <p>
+                        Date de début : {{item.debut}}
+                        Date de fin : {{item.fin}}
+                        Adresse : {{item.adresse}}
+                        N°tel : {{item.tel}}
+                    </p>
+                    <a href="/">
+                        (infos)
+                    </a>
+                </li>
+            {%endfor%}
+        </ul>
+    </body>
+
+</html>
